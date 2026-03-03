@@ -1,0 +1,69 @@
+max_simulation_time: 10
+delta_t: 0.1
+
+lqr:
+  N: 30
+  nx: 4
+  nu: 2
+  w_pos: 1.0
+  w_vel: 1.0
+  w_yaw: 20.0
+  w_acc: 0.5
+  w_stl: 30.0
+  # Solving CILQR using the augmented lagrangian method or the barrier function
+  slove_type: "barrier" # "alm"
+  alm_rho_init: 0
+  alm_gamma: 0
+  max_rho: 20
+  max_mu: 100
+  # barrier function parameters: c(x) = q1 * exp(q2 * x)
+  obstacle_exp_q1: 5.5
+  obstacle_exp_q2: 5.75
+  state_exp_q1: 3.0
+  state_exp_q2: 3.6
+  use_last_solution: true
+
+iteration:
+  max_iter: 100
+  init_lamb: 0
+  lamb_decay: 0.5
+  lamb_amplify: 2.0
+  max_lamb: 1000.0
+  convergence_threshold: 0.01
+  accept_step_threshold: 0.5
+
+vehicle:
+  target_velocity: 9
+  wheelbase: 2.8
+  width: 2
+  length: 4.5
+  velo_max: 10.0
+  velo_min: 0.0
+  yaw_lim: 1.57
+  acc_max: 3.0
+  acc_min: -3.0
+  stl_lim: 0.12
+  d_safe: 0.9
+
+laneline:
+  reference:
+    x: [-10, 0, 50, 100, 150, 200]
+    y: [7.2, 7.2, 7.2, 7.2, 7.2, 7.2]
+  border: [-9, -5.4, -1.8, 1.8]
+  center_line: [0, -3.6, -7.2]
+
+initial_condition:
+  # [x, y, v, yaw]
+  - [0, 0, 6.0, 0]  # ego
+  - [20, 0, 3.0, 0]
+  - [40, 0, 3.0, 0]
+  - [50, 0, 3.0, 0]
+  - [0, 3.6, 5.0, 0]
+  - [35, 3.6, 5.0, 0]
+  - [50, 3.6, 5.0, 0]
+  - [5, 7.2, 7, 0]
+  - [50, 7.2, 6.0, 0]
+
+visualization:
+  y_lim: [-3, 17]
+  show_obstacle_boundary: false
